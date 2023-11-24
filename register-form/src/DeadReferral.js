@@ -5,12 +5,10 @@ const DeadReferral = ({ name, value, onChange }) => {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    // Fetch data from the database or an API endpoint.
-    // Replace the fetch URL with your actual backend endpoint.
-    fetch('https://your-api-endpoint.com/data')
+    fetch('http://127.0.0.1:5000/dead_referral_reasons')
       .then((response) => response.json())
       .then((data) => {
-        // Assuming data is an array of objects with 'value' and 'label' properties.
+        // Assuming data is now just an array of strings (labels).
         setOptions(data);
       })
       .catch((error) => console.error('Error fetching data:', error));
@@ -20,7 +18,7 @@ const DeadReferral = ({ name, value, onChange }) => {
     <FormControl fullWidth>
       <InputLabel>Dead Referral Reason</InputLabel>
       <Select
-        name="Dead Referral Reason"
+        name={name}
         value={value}
         onChange={onChange}
         label="Dead Referral Reason"
@@ -28,9 +26,10 @@ const DeadReferral = ({ name, value, onChange }) => {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
+        {options.map((label) => (
+          // Using the label as the value since only labels are provided.
+          <MenuItem key={label} value={label}>
+            {label}
           </MenuItem>
         ))}
       </Select>
