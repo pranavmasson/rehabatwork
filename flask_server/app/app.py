@@ -78,7 +78,9 @@ def get_managers():
 def get_employers():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT Name FROM employers')  # Replace with actual table name
+
+    # Select only the 'label' column from the 'dead-referral-reasons' table
+    cursor.execute('SELECT Name FROM employers')  # Ensure the table name is correctly referenced
     employers = cursor.fetchall()
     options = [row[0] for row in employers]  # Accessing by index
     cursor.close()
