@@ -3,7 +3,7 @@ import pyodbc
 from flask_cors import CORS
 
 app = Flask(__name__)
-import pyodbc
+CORS(app)
 
 # Database configuration
 server = r'RAWSVR-DB\ADA'  # Use a raw string to handle the backslash
