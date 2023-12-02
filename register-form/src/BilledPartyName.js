@@ -4,17 +4,14 @@ import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 const BilledPartyName = ({ name, value, onChange }) => {
   const [options, setOptions] = useState([]);
 
-  useEffect(() => {
-    // Fetch data from the database or an API endpoint.
-    // Replace the fetch URL with your actual backend endpoint.
-    fetch('http://127.0.0.1:5000/billed_party')
-      .then((response) => response.json())
-      .then((data) => {
-        // Assuming data is an array of objects with 'value' and 'label' properties.
-        setOptions(data);
-      })
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+// Fetch data from /billed_party
+useEffect(() => {
+  fetch('http://127.0.0.1:5000/billed_party')
+    .then((response) => response.json())
+    .then((data) => setOptions(data))
+    .catch((error) => console.error('Error:', error));
+}, []);
+
 
   return (
     <FormControl fullWidth>

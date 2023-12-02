@@ -7,11 +7,8 @@ const DeadReferral = ({ name, value, onChange }) => {
   useEffect(() => {
     fetch('http://127.0.0.1:5000/dead_referral_reasons')
       .then((response) => response.json())
-      .then((data) => {
-        // Assuming data is now just an array of strings (labels).
-        setOptions(data);
-      })
-      .catch((error) => console.error('Error fetching data:', error));
+      .then((data) => setOptions(data))
+      .catch((error) => console.error('Error:', error));
   }, []);
 
   return (
