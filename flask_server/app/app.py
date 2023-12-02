@@ -109,7 +109,7 @@ def get_employers():
     cursor = conn.cursor()
 
     # Select only the 'label' column from the 'dead-referral-reasons' table
-    cursor.execute('SELECT Name FROM employer_dropdown')  # Ensure the table name is correctly referenced
+    cursor.execute('SELECT Name FROM employers')  # Ensure the table name is correctly referenced
     employers = cursor.fetchall()
 
     # Extract the 'label' values into a list of strings
