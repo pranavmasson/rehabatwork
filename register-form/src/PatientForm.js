@@ -133,11 +133,31 @@ const PatientForm = () => {
     referralNotes: '',
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission here, e.g., send data to a server
-    console.log(formData);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  
+    try {
+      const response = await fetch('http://localhost:5000/submit_patient_form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (response.ok) {
+        console.log('Form submitted successfully');
+        // Handle successful submission, like clearing the form or showing a success message
+      } else {
+        console.error('Form submission failed:', response.statusText);
+        // Handle response errors here
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      // Handle network errors here
+    }
   };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
