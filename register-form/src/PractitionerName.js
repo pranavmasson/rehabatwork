@@ -15,23 +15,23 @@ useEffect(() => {
 
   return (
     <FormControl fullWidth>
-      <InputLabel>Name</InputLabel>
-      <Select
-        name={name}
-        value={value}
-        onChange={onChange}
-        label="Name"
-      >
-        <MenuItem value="">
-          <em>None</em>
+    <InputLabel>Name</InputLabel>
+    <Select
+      name={name}
+      value={value || ''}
+      onChange={onChange}
+      label="Name"
+    >
+      <MenuItem value="">
+        <em>None</em>
+      </MenuItem>
+      {options.map((option) => (
+        <MenuItem key={option} value={option}>
+          {option}
         </MenuItem>
-        {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+      ))}
+    </Select>
+  </FormControl>
   );
 };
 
