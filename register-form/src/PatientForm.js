@@ -42,9 +42,9 @@ const PatientForm = () => {
     icd10: '',
     therapistInitials: '',
     medicalRecordsSend: '',
-    JobDescriptionSend: '',
+    jobDescriptionSend: '',
     otherDataSend: '',
-    returntoWork: '',
+    returnToWork: '',
     vocationalPlacement: '',
     whwcOptional: '',
     otherReferralGoals: '',
@@ -94,18 +94,18 @@ const PatientForm = () => {
     additionalPartyFax: '',
     additionalPartyContactStyle: '',
     additionalPartyReportStyle: '',
-    BilledPartyName: '',
-    BilledPartyJurisdiction: '',
-    BilledPartyCompany: '',
-    BilledPartyAddress: '',
-    BilledPartyZipCode: '',
-    BilledPartyCity: '',
-    BilledPartyState: '',
-    BilledPartyPhone: '',
-    BilledPartyEmail: '',
-    BilledPartyFax: '',
-    BilledPartyContactStyle: '',
-    BilledPartyReportStyle: '',
+    billedPartyName: '',
+    billedPartyJurisdiction: '',
+    billedPartyCompany: '',
+    billedPartyAddress: '',
+    billedPartyZipCode: '',
+    billedPartyCity: '',
+    billedPartyState: '',
+    billedPartyPhone: '',
+    billedPartyEmail: '',
+    billedPartyFax: '',
+    billedPartyContactStyle: '',
+    billedPartyReportStyle: '',
     insuranceIdentifier: '',
     secondaryInsuranceIdentifier: '',
     authorizedVisits: '',
@@ -126,8 +126,8 @@ const PatientForm = () => {
     emergencyContactName: '',
     emergencyContactPhone: '',
     emergencyContactRelationship: '',
-    dateofReferral: null,
-    dateofRevision: null,
+    dateOfReferral: null,
+    dateOfRevision: null,
     appointmentDate: null,
     appointmentTime: null,
     referralNotes: '',
@@ -416,9 +416,9 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Job Description?"
-                    name="JobDescriptionSend"
+                    name="jobDescriptionSend"
                     select
-                    value={formData.JobDescriptionSend}
+                    value={formData.jobDescriptionSend}
                     onChange={handleChange}
                     margin="normal"
                   >
@@ -451,9 +451,9 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Return to Work"
-                    name="returntoWork"
+                    name="returnToWork"
                     select
-                    value={formData.returntoWork}
+                    value={formData.returnToWork}
                     onChange={handleChange}
                     margin="normal"
                   >
@@ -1014,7 +1014,7 @@ const PatientForm = () => {
                     label="Jurisdiction"
                     name="jurisdiction"
                     select
-                    value={formData.BilledPartyJurisdiction}
+                    value={formData.billedPartyJurisdiction}
                     onChange={handleChange}
                     margin="normal"
                   >
@@ -1030,7 +1030,7 @@ const PatientForm = () => {
                     fullWidth
                     label="Company"
                     name="BilledPartyCompany"
-                    value={formData.BilledPartyCompany}
+                    value={formData.billedPartyCompany}
                     onChange={handleChange}
                     margin="normal"
                   />
@@ -1040,7 +1040,7 @@ const PatientForm = () => {
                     fullWidth
                     label="Address"
                     name="BilledPartyAddress"
-                    value={formData.BilledPartyAddress}
+                    value={formData.billedPartyAddress}
                     onChange={handleChange}
                     margin="normal"
                   />
@@ -1050,7 +1050,7 @@ const PatientForm = () => {
                     fullWidth
                     label="Zip Code"
                     name="BilledPartyZipCode"
-                    value={formData.BilledZipCode}
+                    value={formData.billedZipCode}
                     onChange={handleChange}
                     margin="normal"
                   />
@@ -1060,7 +1060,7 @@ const PatientForm = () => {
                     fullWidth
                     label="City"
                     name="BilledPartyCity"
-                    value={formData.BilledPartyCity}
+                    value={formData.billedPartyCity}
                     onChange={handleChange}
                     margin="normal"
                   />
@@ -1070,7 +1070,7 @@ const PatientForm = () => {
                     fullWidth
                     label="State"
                     name="BilledPartyState"
-                    value={formData.BilledPartyState}
+                    value={formData.billedPartyState}
                     onChange={handleChange}
                     margin="normal"
                   />
@@ -1080,7 +1080,7 @@ const PatientForm = () => {
                     fullWidth
                     label="Phone"
                     name="BilledPartyPhone"
-                    value={formData.BilledPartyPhone}
+                    value={formData.billedPartyPhone}
                     onChange={handleChange}
                     margin="normal"
                   />
@@ -1090,7 +1090,7 @@ const PatientForm = () => {
                     fullWidth
                     label="Email"
                     name="BilledPartyEmail"
-                    value={formData.BilledPartyEmail}
+                    value={formData.billedPartyEmail}
                     onChange={handleChange}
                     margin="normal"
                   />
@@ -1100,7 +1100,7 @@ const PatientForm = () => {
                     fullWidth
                     label="Fax"
                     name="BilledPartyFax"
-                    value={formData.BilledPartyFax}
+                    value={formData.billedPartyFax}
                     onChange={handleChange}
                     margin="normal"
                   />
@@ -1111,7 +1111,7 @@ const PatientForm = () => {
                     label="Preferred Contact"
                     name="Preferred Contact"
                     select
-                    value={formData.BilledPartyContactStyle}
+                    value={formData.billedPartyContactStyle}
                     onChange={handleChange}
                     margin="normal"
                   >
@@ -1125,7 +1125,7 @@ const PatientForm = () => {
                     label="Preferred Report"
                     name="Preferred Report"
                     select
-                    value={formData.BilledPartyReportStyle}
+                    value={formData.billedPartyReportStyle}
                     onChange={handleChange}
                     margin="normal"
                   >
@@ -1408,10 +1408,10 @@ const PatientForm = () => {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker item xs={8}
                       label="Date of Referral"
-                      name="dateofReferral"
-                      value={formData.dateofReferral}
+                      name="dateOfReferral"
+                      value={formData.dateOfReferral}
                       onChange={(date) =>
-                        setFormData({ ...formData, dateofReferral: date })
+                        setFormData({ ...formData, dateOfReferral: date })
                       }
                       margin="normal"
                     />
@@ -1430,10 +1430,10 @@ const PatientForm = () => {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker item xs={8}
                       label="Date of Revision"
-                      name="dateofRevision"
-                      value={formData.dateofRevision}
+                      name="dateOfRevision"
+                      value={formData.dateOfRevision}
                       onChange={(date) =>
-                        setFormData({ ...formData, dateofRevision: date })
+                        setFormData({ ...formData, dateOfRevision: date })
                       }
                       margin="normal"
                     />
