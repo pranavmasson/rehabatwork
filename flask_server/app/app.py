@@ -100,5 +100,83 @@ def get_practitioners():
     conn.close()
     return jsonify(options)
 
+@app.route('/submit_patient_form', methods=['POST'])
+def submit_patient_form():
+    data = request.json
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # SQL query to insert data into the table
+    insert_query = """
+    INSERT INTO PatientForms (
+        PatientFormId, patientFirstName, patientLastName, patientSSN, gender, dob, doi, field2,
+        patientPhoneNumber, patientEmail, patientAddress, patientZipCode, patientState, patientCity,
+        referralType, diagnosis, referredBy, icd10, therapistInitials, medicalRecordsSend,
+        jobDescriptionSend, otherDataSend, returnToWork, vocationalPlacement, whwcOptional,
+        otherReferralGoals, practitionerName, practitionerPractice, practitionerAddress,
+        practitionerZipCode, practitionerCity, practitionerState, practitionerPhone,
+        practitionerEmail, practitionerFax, practitionerContactStyle, practitionerReportStyle,
+        caseManagerName, caseManagerPractice, caseManagerAddress, caseManagerZipCode,
+        caseManagerCity, caseManagerState, caseManagerPhone, caseManagerEmail, caseManagerFax,
+        caseManagerContactStyle, caseManagerReportStyle, atfcName, atfcFirm, atfcParalegal,
+        atfcAddress, atfcZipCode, atfcCity, atfcState, atfcPhone, atfcEmail, atfcFax,
+        atfcContactStyle, atfcReportStyle, additionalPartyType, additionalPartyName,
+        additionalPartyCompany, additionalPartyAddress, additionalPartyZipCode, additionalPartyCity,
+        additionalPartyState, additionalPartyPhone, additionalPartyEmail, additionalPartyFax,
+        additionalPartyContactStyle, additionalPartyReportStyle, billedPartyName,
+        billedPartyJurisdiction, billedPartyCompany, billedPartyAddress, billedPartyZipCode,
+        billedPartyCity, billedPartyState, billedPartyPhone, billedPartyEmail, billedPartyFax,
+        billedPartyContactStyle, billedPartyReportStyle, insuranceIdentifier,
+        secondaryInsuranceIdentifier, authorizedVisits, authorizedExp, caseNumber,
+        reasonForVisit, policyHolderName, policyHolderRelationship, phdob, policyHolderAddress,
+        policyHolderZipCode, policyHolderCity, policyHolderState, benefitsExplained, patientPosition,
+        patientEmployerContact, patientEmployerPhone, emergencyContactName, emergencyContactPhone,
+        emergencyContactRelationship, dateOfReferral, dateOfRevision, appointmentDate,
+        appointmentTime, referralNotes
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """
+    cursor.execute(insert_query, (
+        data['PatientFormId'], data['patientFirstName'], data['patientLastName'], data['patientSSN'],
+        data['gender'], data['dob'], data['doi'], data['field2'], data['patientPhoneNumber'],
+        data['patientEmail'], data['patientAddress'], data['patientZipCode'], data['patientState'],
+        data['patientCity'], data['referralType'], data['diagnosis'], data['referredBy'],
+        data['icd10'], data['therapistInitials'], data['medicalRecordsSend'],
+        data['jobDescriptionSend'], data['otherDataSend'], data['returnToWork'],
+        data['vocationalPlacement'], data['whwcOptional'], data['otherReferralGoals'],
+        data['practitionerName'], data['practitionerPractice'], data['practitionerAddress'],
+        data['practitionerZipCode'], data['practitionerCity'], data['practitionerState'],
+        data['practitionerPhone'], data['practitionerEmail'], data['practitionerFax'],
+        data['practitionerContactStyle'], data['practitionerReportStyle'], data['caseManagerName'],
+        data['caseManagerPractice'], data['caseManagerAddress'], data['caseManagerZipCode'],
+        data['caseManagerCity'], data['caseManagerState'], data['caseManagerPhone'],
+        data['caseManagerEmail'], data['caseManagerFax'], data['caseManagerContactStyle'],
+        data['caseManagerReportStyle'], data['atfcName'], data['atfcFirm'], data['atfcParalegal'],
+        data['atfcAddress'], data['atfcZipCode'], data['atfcCity'], data['atfcState'],
+        data['atfcPhone'], data['atfcEmail'], data['atfcFax'], data['atfcContactStyle'],
+        data['atfcReportStyle'], data['additionalPartyType'], data['additionalPartyName'],
+        data['additionalPartyCompany'], data['additionalPartyAddress'], data['additionalPartyZipCode'],
+        data['additionalPartyCity'], data['additionalPartyState'], data['additionalPartyPhone'],
+        data['additionalPartyEmail'], data['additionalPartyFax'], data['additionalPartyContactStyle'],
+        data['additionalPartyReportStyle'], data['billedPartyName'], data['billedPartyJurisdiction'],
+        data['billedPartyCompany'], data['billedPartyAddress'], data['billedPartyZipCode'],
+        data['billedPartyCity'], data['billedPartyState'], data['billedPartyPhone'],
+        data['billedPartyEmail'], data['billedPartyFax'], data['billedPartyContactStyle'],
+        data['billedPartyReportStyle'], data['insuranceIdentifier'], data['secondaryInsuranceIdentifier'],
+        data['authorizedVisits'], data['authorizedExp'], data['caseNumber'], data['reasonForVisit'],
+        data['policyHolderName'], data['policyHolderRelationship'], data['phdob'], data['policyHolderAddress'],
+        data['policyHolderZipCode'], data['policyHolderCity'], data['policyHolderState'],
+        data['benefitsExplained'], data['patientPosition'], data['patientEmployerContact'],
+        data['patientEmployerPhone'], data['emergencyContactName'], data['emergencyContactPhone'],
+        data['emergencyContactRelationship'], data['dateOfReferral'], data['dateOfRevision'],
+        data['appointmentDate'], data['appointmentTime'], data['referralNotes']
+    ))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({'message': 'Form submitted successfully'}), 200
+
 if __name__ == '__main__':
     app.run(debug=True)
