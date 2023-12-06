@@ -139,10 +139,18 @@ const PatientForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [practitionerName, setPractitionerName] = useState('');
+  const [caseManagerName, setCaseManagerName] = useState('');
 
   const handlePractitionerChange = (event) => {
-    setPractitionerName(event.target.value);
-};
+    setFormData({ ...formData, practitionerName: event.target.value });
+  };
+
+  const handlecaseManagerChange = (event) => {
+    setFormData({ ...formData, caseManagerName: event.target.value });
+  };
+
+
+
 
 
   const handleSubmit = async (event) => {
@@ -525,7 +533,7 @@ const PatientForm = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                 <PractitionerName 
-                  value={practitionerName} 
+                  value={formData.practitionerName} 
                   onChange={handlePractitionerChange}
                 />
                 </Grid>
@@ -645,7 +653,10 @@ const PatientForm = () => {
               <Typography variant="h6">Case Manager Information</Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <CaseManagerName />
+                  <CaseManagerName 
+                  value={formData.caseManagerName} 
+                  onChange={handlecaseManagerChange}
+                />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
