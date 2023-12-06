@@ -16,6 +16,8 @@ import EmployerDropdown from './EmployerDropdown';
 import Services from './Services';
 import DeadReferral from './DeadReferral';
 import logo from './assets/logo2.png';
+import SubmissionConfirmation from './SubmissionConfirmation'; // Adjust the path as necessary
+
 
 
 
@@ -133,8 +135,11 @@ const PatientForm = () => {
     referralNotes: '',
   });
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmitted(true);
   
     try {
       const response = await fetch('http://localhost:5000/submit_patient_form', {
@@ -167,6 +172,10 @@ const PatientForm = () => {
  /*  const fontStyle = {
     fontFamily: 'Helvetica, sans-serif'  // set the font to Helvetica with a generic sans-serif fallback
   }; */
+
+  if (isSubmitted) {
+    return <SubmissionConfirmation />;
+  }
 
   return (
     <Container maxWidth="md">
