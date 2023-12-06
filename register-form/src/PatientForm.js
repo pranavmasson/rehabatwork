@@ -140,6 +140,9 @@ const PatientForm = () => {
 
   const [practitionerName, setPractitionerName] = useState('');
   const [caseManagerName, setCaseManagerName] = useState('');
+  const [atfcName, setatfcName] = useState('');
+  const [billedPartyName, setBilledPartyName] = useState('');
+  const [employerName, setEmployerName] = useState('');
 
   const handlePractitionerChange = (event) => {
     setFormData({ ...formData, practitionerName: event.target.value });
@@ -147,6 +150,18 @@ const PatientForm = () => {
 
   const handlecaseManagerChange = (event) => {
     setFormData({ ...formData, caseManagerName: event.target.value });
+  };
+
+  const handleatfcChange = (event) => {
+    setFormData({ ...formData, atfcName: event.target.value });
+  };
+
+  const handleBilledPartyChange = (event) => {
+    setFormData({ ...formData, billedPartyName: event.target.value });
+  };
+
+  const handleEmployerNameChange = (event) => {
+    setFormData({ ...formData, employerName: event.target.value });
   };
 
 
@@ -774,7 +789,10 @@ const PatientForm = () => {
               <Typography variant="h6">Attorney for the Claimant Information</Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <AttorneyClaimantName />
+                  <AttorneyClaimantName 
+                  value={formData.atfcName} 
+                  onChange={handleatfcChange}
+                />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
@@ -1037,7 +1055,10 @@ const PatientForm = () => {
               <Typography variant="h6">Billed Party</Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <BilledPartyName />
+                  <BilledPartyName 
+                  value={formData.billedPartyName} 
+                  onChange={handleBilledPartyChange}
+                />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
@@ -1357,7 +1378,10 @@ const PatientForm = () => {
               <Typography variant="h6">Employment Information @ Time of Injury</Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <EmployerDropdown />
+                  <EmployerDropdown 
+                  value={formData.employerName} 
+                  onChange={handleEmployerNameChange}
+                />
                 </Grid>
                 <Grid item xs={6} sm={4}>
                   <TextField
