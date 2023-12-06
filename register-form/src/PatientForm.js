@@ -526,7 +526,7 @@ const PatientForm = () => {
                 <Grid item xs={12}>
                 <PractitionerName 
                   value={practitionerName} 
-                  onChange={handlePractitionerChange} 
+                  onChange={handlePractitionerChange}
                 />
                 </Grid>
                 <Grid item xs={6}>
@@ -534,7 +534,7 @@ const PatientForm = () => {
                     fullWidth
                     label="Practice"
                     name="practitionerPractice"
-                    value={formData.practitionerName}
+                    value={formData.practitionerPractice}
                     onChange={handleChange}
                     margin="normal"
                   />
