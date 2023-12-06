@@ -18,9 +18,9 @@ return (
     <InputLabel>Name</InputLabel>
     <Select
       name={name}
-      value={value || ''}
+      value={value}
       onChange={onChange}
-      label="Name"
+      label="Case Manager Name"
     >
       <MenuItem value="">
         <em>None</em>

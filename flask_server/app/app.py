@@ -178,5 +178,22 @@ def submit_patient_form():
 
     return jsonify({'message': 'Form submitted successfully'}), 200
 
+@app.route('/search', methods=['GET'])
+def search_patients():
+    first_name = request.args.get('firstName')
+    last_name = request.args.get('lastName')
+
+    # Assuming your table has columns named 'FirstName', 'LastName', 'Phone', 'Email'
+    query = """
+    SELECT patientFirstName, patientLastName, patientPhoneNumber, patientEmail
+    FROM PatientForms
+    WHERE patientFirstName LIKE ? AND patientLastName LIKE ?
+    """
+    cursor = get_db_connection().cursor()
+    cursor.execute(query, (first_name + '%', last_name + '%'))
+    results = [dict(zip([column[0] for column in cursor.description], row)) for row in cursor.fetchall()]
+    print(results)
+    return jsonify(results)
+
 if __name__ == '__main__':
     app.run(debug=True)

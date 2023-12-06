@@ -18,9 +18,9 @@ useEffect(() => {
     <InputLabel>Name</InputLabel>
     <Select
       name={name}
-      value={value || ''}
+      value={value}
       onChange={onChange}
-      label="Name"
+      label="Practitioner Name"
     >
       <MenuItem value="">
         <em>None</em>
