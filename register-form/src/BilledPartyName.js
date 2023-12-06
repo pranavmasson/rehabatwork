@@ -20,7 +20,7 @@ return (
       name={name}
       value={value}
       onChange={onChange}
-      label="Name"
+      label="Billed Party Name"
     >
       <MenuItem value="">
         <em>None</em>

@@ -17,6 +17,7 @@ import Services from './Services';
 import DeadReferral from './DeadReferral';
 import logo from './assets/logo2.png';
 import SubmissionConfirmation from './SubmissionConfirmation'; // Adjust the path as necessary
+import DropdownMenu from './PractitionerName'; // Adjust the path as necessary
 
 
 
@@ -136,6 +137,13 @@ const PatientForm = () => {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const [practitionerName, setPractitionerName] = useState('');
+
+  const handlePractitionerChange = (event) => {
+    setPractitionerName(event.target.value);
+};
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -516,7 +524,10 @@ const PatientForm = () => {
               <Typography variant="h6">Practitioner Information</Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <PractitionerName />
+                <PractitionerName 
+                  value={practitionerName} 
+                  onChange={handlePractitionerChange} 
+                />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
