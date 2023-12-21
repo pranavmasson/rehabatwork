@@ -64,8 +64,9 @@ const HomePage = () => {
           <Card key={index} style={{ marginBottom: '10px' }}>
             <CardContent>
               <Typography variant="h5">{patient.patientFirstName} {patient.patientLastName}</Typography>
-              <Typography variant="body1">Phone: {patient.patientPhoneNumber}</Typography>
-              <Typography variant="body2">Email: {patient.patientEmail}</Typography>
+              <Typography variant="body1">Date of Birth: {patient.dob}</Typography>
+              <Typography variant="body1">Gender: {patient.gender}</Typography>
+              <Typography variant="body1">DOI: {patient.doi}</Typography>
             </CardContent>
           </Card>
         ))

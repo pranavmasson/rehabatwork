@@ -186,7 +186,7 @@ def search_patients():
 
     # Assuming your table has columns named 'FirstName', 'LastName', 'Phone', 'Email'
     query = """
-    SELECT patientFirstName, patientLastName, patientPhoneNumber, patientEmail
+    SELECT patientFirstName, patientLastName, dob, gender, doi
     FROM PatientForms
     WHERE patientFirstName LIKE ? AND patientLastName LIKE ?
     """
