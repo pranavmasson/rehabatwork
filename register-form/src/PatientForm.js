@@ -18,6 +18,8 @@ import DeadReferral from './DeadReferral';
 import logo from './assets/logo2.png';
 import SubmissionConfirmation from './SubmissionConfirmation'; // Adjust the path as necessary
 import DropdownMenu from './PractitionerName'; // Adjust the path as necessary
+import dayjs from 'dayjs';
+
 
 
 
@@ -208,6 +210,8 @@ const PatientForm = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const today = new Date();
 
  /*  const fontStyle = {
     fontFamily: 'Helvetica, sans-serif'  // set the font to Helvetica with a generic sans-serif fallback
@@ -1497,7 +1501,7 @@ const PatientForm = () => {
                       name="dateOfRevision"
                       value={formData.dateOfRevision}
                       onChange={(date) =>
-                        setFormData({ ...formData, dateOfRevision: date })
+                        setFormData({ ...formData, dateOfRevision: {date} })
                       }
                       margin="normal"
                     />
