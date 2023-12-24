@@ -144,25 +144,34 @@ const PatientForm = () => {
   const [billedPartyName, setBilledPartyName] = useState('');
   const [employerName, setEmployerName] = useState('');
 
-  const handlePractitionerChange = (event) => {
-    setFormData({ ...formData, practitionerName: event.target.value });
-  };
+  // const handlePractitionerChange = (event) => {
+  //   setFormData({ ...formData, practitionerName: event.target.value });
+  // };
 
-  const handlecaseManagerChange = (event) => {
-    setFormData({ ...formData, caseManagerName: event.target.value });
+  const handlePractitionerChange = (name) => {
+    setFormData({ ...formData, practitionerName: name });
   };
+  
 
-  const handleatfcChange = (event) => {
-    setFormData({ ...formData, atfcName: event.target.value });
+  const handlecaseManagerChange = (name) => {
+    setFormData({ ...formData, caseManagerName: name });
   };
+  
 
-  const handleBilledPartyChange = (event) => {
-    setFormData({ ...formData, billedPartyName: event.target.value });
+  const handleatfcChange = (selectedName) => {
+    setFormData({ ...formData, atfcName: selectedName });
   };
+  
 
-  const handleEmployerNameChange = (event) => {
-    setFormData({ ...formData, employerName: event.target.value });
+  const handleBilledPartyChange = (name) => {
+    setFormData({ ...formData, billedPartyName: name });
   };
+  
+
+  const handleEmployerNameChange = (name) => {
+    setFormData({ ...formData, employerName: name });
+  };
+  
 
 
 
