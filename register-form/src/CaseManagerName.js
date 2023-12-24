@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FormControl, InputLabel, Input, List, ListItem } from '@mui/material';
 
-const CaseManagerName = ({ name, value, onChange }) => {
+const CaseManagerName = ({ value, onChange }) => {
   const [options, setOptions] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -17,12 +17,15 @@ const CaseManagerName = ({ name, value, onChange }) => {
   };
 
   const handleSelect = (option) => {
-    onChange(option);
-    setSearchQuery(option);  // Update the search field with the selected option
+    onChange(option.Full_Name);
+    setSearchQuery(`${option.Full_Name}, ${option.Company_Need_to_Add}, ${option.EMail}`);
   };
 
   const filteredOptions = searchQuery ? 
-    options.filter(option => option && option.toLowerCase().includes(searchQuery.toLowerCase())) : 
+    options.filter(option =>
+      option && 
+      `${option.Full_Name} ${option.Company_Need_to_Add} ${option.EMail}`.toLowerCase().includes(searchQuery.toLowerCase())
+    ) : 
     [];
 
   return (
@@ -35,7 +38,7 @@ const CaseManagerName = ({ name, value, onChange }) => {
             key={index} 
             button 
             onClick={() => handleSelect(option)}>
-              {option}
+              {`${option.Full_Name}, ${option.Company_Need_to_Add}, ${option.EMail}`}
           </ListItem>
         ))}
       </List>

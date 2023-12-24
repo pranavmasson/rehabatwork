@@ -69,9 +69,9 @@ def get_billed_party():
 def get_managers():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT Full_Name FROM case_managers')  # Replace with actual table name
+    cursor.execute('SELECT Full_Name, Company_Need_to_Add, EMail FROM case_managers')  # Replace with actual table name
     case_managers = cursor.fetchall()
-    options = [row[0] for row in case_managers]  # Accessing by index
+    options = [{'Full_Name': row[0], 'Company_Need_to_Add': row[1], 'EMail': row[2]} for row in case_managers]
     cursor.close()
     conn.close()
     return jsonify(options)
@@ -93,12 +93,13 @@ def get_employers():
 def get_practitioners():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT Full_Name FROM practitioners')  # Replace with actual table name
+    cursor.execute('SELECT Full_Name, Practice, City FROM practitioners')
     practitioners = cursor.fetchall()
-    options = [row[0] for row in practitioners]  # Accessing by index
+    options = [{'Full_Name': row[0], 'Practice': row[1], 'City': row[2]} for row in practitioners]
     cursor.close()
     conn.close()
     return jsonify(options)
+
 
 @app.route('/submit_patient_form', methods=['POST'])
 def submit_patient_form():

@@ -155,7 +155,7 @@ const PatientForm = () => {
 
   const handlecaseManagerChange = (name) => {
     setFormData({ ...formData, caseManagerName: name });
-  };
+  };  
   
 
   const handleatfcChange = (selectedName) => {

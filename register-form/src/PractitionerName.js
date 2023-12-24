@@ -17,12 +17,14 @@ const PractitionerName = ({ value, onChange }) => {
   };
 
   const handleSelect = (option) => {
-    onChange(option);
-    setSearchQuery(option);
+    onChange(option.Full_Name); // Update based on your selection handling
+    setSearchQuery(`${option.Full_Name}, ${option.Practice}, ${option.City}`);
   };
 
   const filteredOptions = searchQuery ? 
-    options.filter(option => option.toLowerCase().includes(searchQuery.toLowerCase())) : 
+    options.filter(option =>
+      (`${option.Full_Name} ${option.Practice} ${option.City}`).toLowerCase().includes(searchQuery.toLowerCase())
+    ) : 
     [];
 
   return (
@@ -35,7 +37,7 @@ const PractitionerName = ({ value, onChange }) => {
             key={index} 
             button 
             onClick={() => handleSelect(option)}>
-              {option}
+              {`${option.Full_Name}, ${option.Practice}, ${option.City}`}
           </ListItem>
         ))}
       </List>
