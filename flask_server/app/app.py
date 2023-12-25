@@ -182,19 +182,35 @@ def submit_patient_form():
 
 @app.route('/search', methods=['GET'])
 def search_patients():
-    first_name = request.args.get('firstName')
-    last_name = request.args.get('lastName')
+    mode = request.args.get('mode')
+    term = request.args.get('term')
+    print(f"Search mode: {mode}, term: {term}")
 
-    # Assuming your table has columns named 'FirstName', 'LastName', 'Phone', 'Email'
-    query = """
-    SELECT patientFirstName, patientLastName, dob, gender, doi
-    FROM PatientForms
-    WHERE patientFirstName LIKE ? AND patientLastName LIKE ?
-    """
-    cursor = get_db_connection().cursor()
-    cursor.execute(query, (first_name + '%', last_name + '%'))
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    if mode == 'name':
+        first_name, last_name = term.split(' ')
+        query = """
+            SELECT patientFirstName, patientLastName, dob, gender, doi
+            FROM PatientForms
+            WHERE patientFirstName LIKE ? AND patientLastName LIKE ?
+        """
+        cursor.execute(query, (first_name + '%', last_name + '%'))
+    elif mode == 'dob':
+        query = """
+            SELECT patientFirstName, patientLastName, dob, gender, doi
+            FROM PatientForms
+            WHERE dob = ?
+        """
+        cursor.execute(query, (term,))
+
     results = [dict(zip([column[0] for column in cursor.description], row)) for row in cursor.fetchall()]
+    cursor.close()
+    conn.close()
+    print(f"Query results: {results}")
     return jsonify(results)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

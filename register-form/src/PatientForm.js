@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -139,12 +139,15 @@ const PatientForm = () => {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-
   const [practitionerName, setPractitionerName] = useState('');
   const [caseManagerName, setCaseManagerName] = useState('');
   const [atfcName, setatfcName] = useState('');
   const [billedPartyName, setBilledPartyName] = useState('');
   const [employerName, setEmployerName] = useState('');
+  
+  useEffect(() => {
+    setFormData({ ...formData, dateOfRevision: dayjs() });
+  }, []);
 
   // const handlePractitionerChange = (event) => {
   //   setFormData({ ...formData, practitionerName: event.target.value });
@@ -211,7 +214,6 @@ const PatientForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const today = new Date();
 
  /*  const fontStyle = {
     fontFamily: 'Helvetica, sans-serif'  // set the font to Helvetica with a generic sans-serif fallback
@@ -1500,9 +1502,9 @@ const PatientForm = () => {
                       label="Date of Revision"
                       name="dateOfRevision"
                       value={formData.dateOfRevision}
-                      onChange={(date) =>
-                        setFormData({ ...formData, dateOfRevision: {date} })
-                      }
+                      onChange={(newDate) => {
+                        setFormData({ ...formData, dateOfRevision: dayjs(newDate) });
+                      }}
                       margin="normal"
                     />
                   </LocalizationProvider>
