@@ -261,6 +261,85 @@ def get_case_manager_details(case_manager_name):
     conn.close()
     return jsonify(details)
 
+@app.route('/attorney_claimant_details/<name>')
+def get_attorney_claimant_details(name):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    # Adjust the query based on your actual database schema
+    cursor.execute('SELECT Full_Name, Company_Need_to_Add, Street_1, City, State, Zip_Code, Office, Fax, EMail FROM attorneys WHERE Full_Name = ?', name)
+    data = cursor.fetchone()
+    if data:
+        details = {
+            'name': data[0],
+            'firm': data[1],
+            'street': data[2],
+            'city': data[3],
+            'state': data[4],
+            'zipCode': data[5],
+            'phone': data[6],
+            'fax': data[7],
+            'email': data[8]
+        }
+    else:
+        details = {}
+    cursor.close()
+    conn.close()
+    return jsonify(details)
+
+from flask import jsonify, abort
+
+@app.route('/billed_party_details/<name>')
+def get_billed_party_details(name):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT Name, Street_1, City, State, Zip_Code, Office, Fax, EMail FROM billed_party WHERE Name = ?', [name])
+        data = cursor.fetchone()
+        if data:
+            details = {
+                'name': data[0],
+                'address': data[1],
+                'city': data[2],
+                'state': data[3],
+                'zipCode': data[4],
+                'phone': data[5],
+                'fax': data[6],
+                'email': data[7]
+            }
+        else:
+            details = {}
+        cursor.close()
+        conn.close()
+        return jsonify(details)
+    except Exception as e:
+        print(e)
+        abort(500)  # Send a 500 Internal Server Error response
+
+@app.route('/employer_details/<employer_name>')
+def get_employer_details(employer_name):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT Name, Office FROM employers WHERE Name = ?', [employer_name])
+        data = cursor.fetchone()
+        if data:
+            details = {
+                'name': data[0],
+                'phone': data[1]
+                # Include other fields here if they become available
+            }
+        else:
+            details = {}
+        cursor.close()
+        conn.close()
+        return jsonify(details)
+    except Exception as e:
+        print(e)
+        abort(500)
+
+
+
+
 
 
 

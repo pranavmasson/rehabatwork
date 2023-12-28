@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { FormControl, InputLabel, Input, List, ListItem } from '@mui/material';
 
-const EmployerDropdown = ({ name, value, onChange }) => {
+const EmployerDropdown = ({ value, onChange, updateEmployerDetails }) => {
   const [options, setOptions] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/employers')
-      .then((response) => response.json())
-      .then((data) => setOptions(data))
-      .catch((error) => console.error('Error:', error));
+      .then(response => response.json())
+      .then(data => setOptions(data))
+      .catch(error => console.error('Error:', error));
   }, []);
 
   const handleSearch = (event) => {
@@ -18,7 +18,19 @@ const EmployerDropdown = ({ name, value, onChange }) => {
 
   const handleSelect = (option) => {
     onChange(option);
-    setSearchQuery(option);  // Update the search field with the selected option
+    setSearchQuery(option);
+
+    fetch(`http://127.0.0.1:5000/employer_details/${encodeURIComponent(option)}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        updateEmployerDetails(data);
+      })
+      .catch(error => console.error('Error:', error));
   };
 
   const filteredOptions = searchQuery ? 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FormControl, InputLabel, Input, List, ListItem } from '@mui/material';
 
-const AttorneyClaimantName = ({ name, value, onChange }) => {
+const AttorneyClaimantName = ({ name, value, onChange, updateAttorneyClaimantDetails }) => {
   const [options, setOptions] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -18,7 +18,14 @@ const AttorneyClaimantName = ({ name, value, onChange }) => {
 
   const handleSelect = (option) => {
     onChange(option);
-    setSearchQuery(option);  // Update the search field with the selected option
+    setSearchQuery(option); // Set the search query to the selected name
+
+    fetch(`http://127.0.0.1:5000/attorney_claimant_details/${option}`)
+      .then(response => response.json())
+      .then(data => {
+        updateAttorneyClaimantDetails(data);
+      })
+      .catch(error => console.error('Error:', error));
   };
 
   const filteredOptions = searchQuery ? 

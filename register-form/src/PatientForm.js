@@ -206,6 +206,42 @@ const PatientForm = () => {
       caseManagerFax: details.fax || '',
     });
   };
+
+  const updateAttorneyClaimantDetails = (details) => {
+    setFormData({
+      ...formData,
+      atfcName: details.name || '',
+      atfcFirm: details.firm || '',
+      atfcAddress: details.street || '',
+      atfcZipCode: details.zipCode || '',
+      atfcCity: details.city || '',
+      atfcState: details.state || '',
+      atfcPhone: details.phone || '',
+      atfcEmail: details.email || '',
+      atfcFax: details.fax || '',
+    });
+  };
+
+  const updateBilledPartyDetails = (details) => {
+    setFormData({
+      ...formData,
+      billedPartyName: details.name || '',
+      billedPartyAddress: details.address || '',
+      billedPartyCity: details.city || '',
+      billedPartyState: details.state || '',
+      billedPartyZipCode: details.zipCode || '',
+      billedPartyPhone: details.phone || '',
+      billedPartyEmail: details.email || '',
+      billedPartyFax: details.fax || '',
+    });
+  };
+
+  const updateEmployerDetails = (details) => {
+    setFormData({
+      ...formData,
+      employerName: details.name || '',
+      patientEmployerPhone: details.phone || '',    });
+  };
   
 
 
@@ -839,6 +875,7 @@ const PatientForm = () => {
                   <AttorneyClaimantName 
                   value={formData.atfcName} 
                   onChange={handleatfcChange}
+                  updateAttorneyClaimantDetails={updateAttorneyClaimantDetails}
                 />
                 </Grid>
                 <Grid item xs={6}>
@@ -1105,6 +1142,7 @@ const PatientForm = () => {
                   <BilledPartyName 
                   value={formData.billedPartyName} 
                   onChange={handleBilledPartyChange}
+                  updateBilledPartyDetails={updateBilledPartyDetails}
                 />
                 </Grid>
                 <Grid item xs={6}>
@@ -1428,6 +1466,7 @@ const PatientForm = () => {
                   <EmployerDropdown 
                   value={formData.employerName} 
                   onChange={handleEmployerNameChange}
+                  updateEmployerDetails={updateEmployerDetails}
                 />
                 </Grid>
                 <Grid item xs={6} sm={4}>
