@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FormControl, InputLabel, Input, List, ListItem } from '@mui/material';
 
-const CaseManagerName = ({ value, onChange }) => {
+const CaseManagerName = ({ value, onChange, updateCaseManagerDetails }) => {
   const [options, setOptions] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -18,7 +18,13 @@ const CaseManagerName = ({ value, onChange }) => {
 
   const handleSelect = (option) => {
     onChange(option.Full_Name);
-    setSearchQuery(`${option.Full_Name}, ${option.Company_Need_to_Add}, ${option.EMail}`);
+    setSearchQuery(option.Full_Name);
+    fetch(`http://127.0.0.1:5000/case_manager_details/${option.Full_Name}`)
+      .then(response => response.json())
+      .then(data => {
+        updateCaseManagerDetails(data);
+      })
+      .catch(error => console.error('Error:', error));
   };
 
   const filteredOptions = searchQuery ? 

@@ -211,6 +211,59 @@ def search_patients():
     print(f"Query results: {results}")
     return jsonify(results)
 
+@app.route('/practitioner_details/<practitioner_name>')
+def get_practitioner_details(practitioner_name):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    # Replace the SQL query with one appropriate for your database schema
+    cursor.execute('SELECT Full_Name, Practice, Street_1, City, State, Zip_Code, Office, Fax, Email FROM practitioners WHERE Full_Name = ?', practitioner_name)
+    data = cursor.fetchone()
+    if data:
+        details = {
+            'name': data[0],
+            'practice': data[1],
+            'address': data[2],
+            'city': data[3],
+            'state': data[4],
+            'zipCode': data[5],
+            'phone': data[6],
+            'fax': data[7],
+            'email': data[8]
+        }
+    else:
+        details = {}
+    cursor.close()
+    conn.close()
+    return jsonify(details)
+
+@app.route('/case_manager_details/<case_manager_name>')
+def get_case_manager_details(case_manager_name):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    # Adjust the query based on your actual database schema
+    cursor.execute('SELECT Full_Name, Company_Need_to_Add, Street_1, City, State, Zip_Code, Office, Fax, EMail FROM case_managers WHERE Full_Name = ?', case_manager_name)
+    data = cursor.fetchone()
+    if data:
+        details = {
+            'name': data[0],
+            'company': data[1],
+            'street': data[2],
+            'city': data[3],
+            'state': data[4],
+            'zipCode': data[5],
+            'office': data[6],
+            'fax': data[7],
+            'email': data[8]
+        }
+    else:
+        details = {}
+    cursor.close()
+    conn.close()
+    return jsonify(details)
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

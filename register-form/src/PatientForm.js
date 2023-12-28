@@ -176,6 +176,36 @@ const PatientForm = () => {
   const handleEmployerNameChange = (name) => {
     setFormData({ ...formData, employerName: name });
   };
+
+  const updatePractitionerDetails = (details) => {
+    setFormData({
+      ...formData,
+      practitionerName: details.name || '',
+      practitionerPractice: details.practice || '',
+      practitionerAddress: details.address || '',
+      practitionerZipCode: details.zipCode || '',
+      practitionerCity: details.city || '',
+      practitionerState: details.state || '',
+      practitionerPhone: details.phone || '',
+      practitionerEmail: details.email || '',
+      practitionerFax: details.fax || '',
+    });
+  };
+
+  const updateCaseManagerDetails = (details) => {
+    setFormData({
+      ...formData,
+      caseManagerName: details.name || '',
+      caseManagerPractice: details.company || '',
+      caseManagerAddress: details.street || '',
+      caseManagerZipCode: details.zipCode || '',
+      caseManagerCity: details.city || '',
+      caseManagerState: details.state || '',
+      caseManagerPhone: details.phone || '',
+      caseManagerEmail: details.email || '',
+      caseManagerFax: details.fax || '',
+    });
+  };
   
 
 
@@ -565,6 +595,7 @@ const PatientForm = () => {
                 <PractitionerName 
                   value={formData.practitionerName} 
                   onChange={handlePractitionerChange}
+                  updatePractitionerDetails={updatePractitionerDetails}
                 />
                 </Grid>
                 <Grid item xs={6}>
@@ -686,6 +717,7 @@ const PatientForm = () => {
                   <CaseManagerName 
                   value={formData.caseManagerName} 
                   onChange={handlecaseManagerChange}
+                  updateCaseManagerDetails={updateCaseManagerDetails}
                 />
                 </Grid>
                 <Grid item xs={6}>
