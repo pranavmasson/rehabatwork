@@ -273,6 +273,14 @@ const PatientForm = () => {
       // Handle network errors here
     }
   };
+
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    setFormData(prevFormData => ({
+        ...prevFormData,
+        [name]: value
+    }));
+}
   
 
   const handleChange = (e) => {
@@ -338,7 +346,7 @@ const PatientForm = () => {
                     label="Patient First Name"
                     name="patientFirstName"
                     value={formData.patientFirstName}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -348,7 +356,7 @@ const PatientForm = () => {
                     label="Patient Last Name"
                     name="patientLastName"
                     value={formData.patientLastName}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -358,7 +366,7 @@ const PatientForm = () => {
                     label="SSN"
                     name="patientSSN"
                     value={formData.patientSSN}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -369,7 +377,7 @@ const PatientForm = () => {
                     name="gender"
                     select
                     value={formData.gender}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="male">Male</MenuItem>
@@ -409,7 +417,7 @@ const PatientForm = () => {
                     label="Patient Phone Number"
                     name="patientPhoneNumber"
                     value={formData.patientPhoneNumber}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -419,7 +427,7 @@ const PatientForm = () => {
                     label="Patient Email Address"
                     name="patientEmail"
                     value={formData.patientEmail}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -429,7 +437,7 @@ const PatientForm = () => {
                     label="Patient Address"
                     name="patientAddress"
                     value={formData.patientAddress}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -439,7 +447,7 @@ const PatientForm = () => {
                     label="Zip Code"
                     name="patientZipCode"
                     value={formData.patientZipCode}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -449,7 +457,7 @@ const PatientForm = () => {
                     label="City"
                     name="patientCity"
                     value={formData.patientCity}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -459,7 +467,7 @@ const PatientForm = () => {
                     label="Patient State"
                     name="patientState"
                     value={formData.patientState}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -477,7 +485,7 @@ const PatientForm = () => {
                     name="referralType"
                     select
                     value={formData.referralType}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="WC">WC</MenuItem>
@@ -497,7 +505,7 @@ const PatientForm = () => {
                     label="Diagnosis"
                     name="diagnosis"
                     value={formData.diagnosis}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -508,7 +516,7 @@ const PatientForm = () => {
                     name="referredBy"
                     select
                     value={formData.referredBy}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Adjuster">Adjuster</MenuItem>
@@ -533,7 +541,7 @@ const PatientForm = () => {
                     label="ICD-10"
                     name="icd10"
                     value={formData.icd10}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -543,7 +551,7 @@ const PatientForm = () => {
                     label="Therapist Initials"
                     name="therapistInitials"
                     value={formData.therapistInitials}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -554,7 +562,7 @@ const PatientForm = () => {
                     name="medicalRecordsSend"
                     select
                     value={formData.medicalRecordsSend}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="male">Yes</MenuItem>
@@ -568,7 +576,7 @@ const PatientForm = () => {
                     name="jobDescriptionSend"
                     select
                     value={formData.jobDescriptionSend}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="male">Yes</MenuItem>
@@ -581,7 +589,7 @@ const PatientForm = () => {
                     label="Other:"
                     name="otherDataSend"
                     value={formData.otherDataSend}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -603,7 +611,7 @@ const PatientForm = () => {
                     name="returnToWork"
                     select
                     value={formData.returnToWork}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
@@ -617,7 +625,7 @@ const PatientForm = () => {
                     name="vocationalPlacement"
                     select
                     value={formData.vocationalPlacement}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
@@ -631,7 +639,7 @@ const PatientForm = () => {
                     name="whwcOptional"
                     select
                     value={formData.vocationalPlacement}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
@@ -644,7 +652,7 @@ const PatientForm = () => {
                     label="Other?"
                     name="otherReferralGoals"
                     value={formData.otherReferralGoals}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -668,7 +676,7 @@ const PatientForm = () => {
                     label="Practice"
                     name="practitionerPractice"
                     value={formData.practitionerPractice}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -678,7 +686,7 @@ const PatientForm = () => {
                     label="Address"
                     name="practitionerAddress"
                     value={formData.practitionerAddress}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -688,7 +696,7 @@ const PatientForm = () => {
                     label="Zip Code"
                     name="practitionerZipCode"
                     value={formData.practitionerZipCode}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -698,7 +706,7 @@ const PatientForm = () => {
                     label="City"
                     name="practitionerCity"
                     value={formData.practitionerCity}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -708,7 +716,7 @@ const PatientForm = () => {
                     label="State"
                     name="practitionerCity"
                     value={formData.practitionerCity}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -718,7 +726,7 @@ const PatientForm = () => {
                     label="Phone"
                     name="practitionerPhone"
                     value={formData.practitionerPhone}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -728,7 +736,7 @@ const PatientForm = () => {
                     label="Email"
                     name="practitionerEmail"
                     value={formData.practitionerEmail}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -738,7 +746,7 @@ const PatientForm = () => {
                     label="Fax"
                     name="practitionerFax"
                     value={formData.practitionerFax}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -749,7 +757,7 @@ const PatientForm = () => {
                     name="Preferred Contact"
                     select
                     value={formData.practitionerContactStyle}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Phone">Phone</MenuItem>
@@ -763,7 +771,7 @@ const PatientForm = () => {
                     name="Preferred Report"
                     select
                     value={formData.practitionerReportStyle}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Fax">Fax</MenuItem>
@@ -790,7 +798,7 @@ const PatientForm = () => {
                     label="Company"
                     name="caseManagerPractice"
                     value={formData.caseManagerPractice}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -800,7 +808,7 @@ const PatientForm = () => {
                     label="Address"
                     name="caseManagerAddress"
                     value={formData.caseManagerAddress}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -810,7 +818,7 @@ const PatientForm = () => {
                     label="Zip Code"
                     name="caseManagerZipCode"
                     value={formData.caseManagerZipCode}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -820,7 +828,7 @@ const PatientForm = () => {
                     label="City"
                     name="caseManagerCity"
                     value={formData.caseManagerCity}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -830,7 +838,7 @@ const PatientForm = () => {
                     label="State"
                     name="caseManagerCity"
                     value={formData.caseManagerCity}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -840,7 +848,7 @@ const PatientForm = () => {
                     label="Phone"
                     name="caseManagerPhone"
                     value={formData.caseManagerPhone}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -850,7 +858,7 @@ const PatientForm = () => {
                     label="Email"
                     name="caseManagerEmail"
                     value={formData.caseManagerEmail}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -860,7 +868,7 @@ const PatientForm = () => {
                     label="Fax"
                     name="caseManagerFax"
                     value={formData.caseManagerFax}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -871,7 +879,7 @@ const PatientForm = () => {
                     name="Preferred Contact"
                     select
                     value={formData.CaseManagerContactStyle}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Phone">Phone</MenuItem>
@@ -885,7 +893,7 @@ const PatientForm = () => {
                     name="Preferred Report"
                     select
                     value={formData.CaseManagerReportStyle}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Fax">Fax</MenuItem>
@@ -912,7 +920,7 @@ const PatientForm = () => {
                     label="Firm"
                     name="atfcFirm"
                     value={formData.atfcFirm}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -922,7 +930,7 @@ const PatientForm = () => {
                     label="Paralegal"
                     name="atfcParalegal"
                     value={formData.atfcParalegal}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -932,7 +940,7 @@ const PatientForm = () => {
                     label="Address"
                     name="atfcAddress"
                     value={formData.atfcAddress}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -942,7 +950,7 @@ const PatientForm = () => {
                     label="Zip Code"
                     name="atfcZipCode"
                     value={formData.atfcZipCode}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -952,7 +960,7 @@ const PatientForm = () => {
                     label="City"
                     name="atfcCity"
                     value={formData.atfcCity}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -962,7 +970,7 @@ const PatientForm = () => {
                     label="State"
                     name="atfcState"
                     value={formData.atfcState}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -972,7 +980,7 @@ const PatientForm = () => {
                     label="Phone"
                     name="atfcPhone"
                     value={formData.atfcPhone}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -982,7 +990,7 @@ const PatientForm = () => {
                     label="Email"
                     name="atfcEmail"
                     value={formData.atfcEmail}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -992,7 +1000,7 @@ const PatientForm = () => {
                     label="Fax"
                     name="atfcFax"
                     value={formData.atfcFax}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1003,7 +1011,7 @@ const PatientForm = () => {
                     name="Preferred Contact"
                     select
                     value={formData.atfcContactStyle}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Phone">Phone</MenuItem>
@@ -1017,7 +1025,7 @@ const PatientForm = () => {
                     name="Preferred Report"
                     select
                     value={formData.atfcReportStyle}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Fax">Fax</MenuItem>
@@ -1037,7 +1045,7 @@ const PatientForm = () => {
                     label="Party Type"
                     name="additionalPartyType"
                     value={formData.additionalPartyType}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1047,7 +1055,7 @@ const PatientForm = () => {
                     label="Party Name"
                     name="additionalPartyName"
                     value={formData.additionalPartyName}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1057,7 +1065,7 @@ const PatientForm = () => {
                     label="Company"
                     name="additionalPartyCompany"
                     value={formData.additionalPartyCompany}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1067,7 +1075,7 @@ const PatientForm = () => {
                     label="Address"
                     name="additionalPartyAddress"
                     value={formData.additionalPartyAddress}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1077,7 +1085,7 @@ const PatientForm = () => {
                     label="Zip Code"
                     name="additionalPartyZipCode"
                     value={formData.additionalZipCode}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1087,7 +1095,7 @@ const PatientForm = () => {
                     label="City"
                     name="additionalPartyCity"
                     value={formData.additionalPartyCity}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1097,7 +1105,7 @@ const PatientForm = () => {
                     label="State"
                     name="additionalPartyState"
                     value={formData.additionalPartyState}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1107,7 +1115,7 @@ const PatientForm = () => {
                     label="Phone"
                     name="additionalPartyPhone"
                     value={formData.additionalPartyPhone}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1117,7 +1125,7 @@ const PatientForm = () => {
                     label="Email"
                     name="additionalPartyEmail"
                     value={formData.additionalPartyEmail}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1127,7 +1135,7 @@ const PatientForm = () => {
                     label="Fax"
                     name="additionalPartyFax"
                     value={formData.additionalPartyFax}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1138,7 +1146,7 @@ const PatientForm = () => {
                     name="Preferred Contact"
                     select
                     value={formData.additionalPartyContactStyle}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Phone">Phone</MenuItem>
@@ -1152,7 +1160,7 @@ const PatientForm = () => {
                     name="Preferred Report"
                     select
                     value={formData.additionalPartyReportStyle}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Fax">Fax</MenuItem>
@@ -1180,7 +1188,7 @@ const PatientForm = () => {
                     name="jurisdiction"
                     select
                     value={formData.billedPartyJurisdiction}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="DC">DC</MenuItem>
@@ -1196,7 +1204,7 @@ const PatientForm = () => {
                     label="Company"
                     name="BilledPartyCompany"
                     value={formData.billedPartyCompany}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1206,7 +1214,7 @@ const PatientForm = () => {
                     label="Address"
                     name="BilledPartyAddress"
                     value={formData.billedPartyAddress}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1216,7 +1224,7 @@ const PatientForm = () => {
                     label="Zip Code"
                     name="BilledPartyZipCode"
                     value={formData.billedZipCode}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1226,7 +1234,7 @@ const PatientForm = () => {
                     label="City"
                     name="BilledPartyCity"
                     value={formData.billedPartyCity}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1236,7 +1244,7 @@ const PatientForm = () => {
                     label="State"
                     name="BilledPartyState"
                     value={formData.billedPartyState}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1246,7 +1254,7 @@ const PatientForm = () => {
                     label="Phone"
                     name="BilledPartyPhone"
                     value={formData.billedPartyPhone}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1256,7 +1264,7 @@ const PatientForm = () => {
                     label="Email"
                     name="BilledPartyEmail"
                     value={formData.billedPartyEmail}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1266,7 +1274,7 @@ const PatientForm = () => {
                     label="Fax"
                     name="BilledPartyFax"
                     value={formData.billedPartyFax}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1277,7 +1285,7 @@ const PatientForm = () => {
                     name="Preferred Contact"
                     select
                     value={formData.billedPartyContactStyle}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Phone">Phone</MenuItem>
@@ -1291,7 +1299,7 @@ const PatientForm = () => {
                     name="Preferred Report"
                     select
                     value={formData.billedPartyReportStyle}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Fax">Fax</MenuItem>
@@ -1312,7 +1320,7 @@ const PatientForm = () => {
                     label="Insurance/Claim/ID Identifier"
                     name="insuranceIdentifier"
                     value={formData.insuranceIdentifier}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1322,7 +1330,7 @@ const PatientForm = () => {
                     label="Secondary Insurance/Claim/ID Identifier"
                     name="secondaryInsuranceIdentifier"
                     value={formData.secondaryInsuranceIdentifier}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1332,7 +1340,7 @@ const PatientForm = () => {
                     label="Authorized Visits"
                     name="authorizedVisits"
                     value={formData.authorizedVisits}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1342,7 +1350,7 @@ const PatientForm = () => {
                     label="Authorized Exp"
                     name="authorizedExp"
                     value={formData.authorizedExp}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1352,7 +1360,7 @@ const PatientForm = () => {
                     label="Case Number"
                     name="caseNumber"
                     value={formData.caseNumber}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1363,7 +1371,7 @@ const PatientForm = () => {
                     name="reasonForVisit"
                     select
                     value={formData.reasonForVisit}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="FCE">FCE</MenuItem>
@@ -1393,7 +1401,7 @@ const PatientForm = () => {
                     label="Policy Holder's Name Other Than Self"
                     name="policyHolderName"
                     value={formData.policyHolderName}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1404,7 +1412,7 @@ const PatientForm = () => {
                     name="policyHolderRelationship"
                     select
                     value={formData.policyHolderRelationship}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Spouse">Spouse</MenuItem>
@@ -1433,7 +1441,7 @@ const PatientForm = () => {
                     label="Policy Holder Address"
                     name="policyHolderAddress"
                     value={formData.policyHolderAddress}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1443,7 +1451,7 @@ const PatientForm = () => {
                     label="Zip Code"
                     name="policyHolderZipCode"
                     value={formData.policyHolderZipCode}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1453,7 +1461,7 @@ const PatientForm = () => {
                     label="City"
                     name="policyHolderCity"
                     value={formData.policyHolderCity}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1463,7 +1471,7 @@ const PatientForm = () => {
                     label="State"
                     name="policyHolderState"
                     value={formData.policyHolderState}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1474,7 +1482,7 @@ const PatientForm = () => {
                     name="benefitsExplained"
                     select
                     value={formData.benefitsExplained}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
@@ -1503,7 +1511,7 @@ const PatientForm = () => {
                     label="Position"
                     name="patientPosition"
                     value={formData.patientPosition}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1513,7 +1521,7 @@ const PatientForm = () => {
                     label="Contact"
                     name="patientEmployerContact"
                     value={formData.patientEmployerContact}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1523,7 +1531,7 @@ const PatientForm = () => {
                     label="Phone"
                     name="patientEmployerPhone"
                     value={formData.patientEmployerPhone}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1541,7 +1549,7 @@ const PatientForm = () => {
                     label="Emergency Contact"
                     name="emergencyContact"
                     value={formData.emergencyContact}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1551,7 +1559,7 @@ const PatientForm = () => {
                     label="Phone"
                     name="emergencyContactPhone"
                     value={formData.emergencyContactPhone}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1561,7 +1569,7 @@ const PatientForm = () => {
                     label="Relationship"
                     name="emergencyContactRelationship"
                     value={formData.emergencyContactRelationship}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1623,7 +1631,7 @@ const PatientForm = () => {
                     label="Date"
                     name="appointmentDate"
                     value={formData.appointmentDate}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1633,7 +1641,7 @@ const PatientForm = () => {
                     label="@"
                     name="appointmentTime"
                     value={formData.appointmentTime}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                   />
                 </Grid>
@@ -1654,7 +1662,7 @@ const PatientForm = () => {
                     label="@"
                     name="referralNotes"
                     value={formData.referralNotes}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     margin="normal"
                     InputProps={{
                       style: {

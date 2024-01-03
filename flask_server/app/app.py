@@ -4,6 +4,7 @@ from flask_cors import CORS
 from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
 import io
+import re
 
 app = Flask(__name__)
 CORS(app)
@@ -345,18 +346,26 @@ def print_pdf():
     data = request.json
     
     # Load your single-page scanned PDF
-    reader = PdfReader("MASTER REGISTRATION REFERRAL.pdf")
+    reader = PdfReader("registerpdf.pdf")
     writer = PdfWriter()
 
     # Create a new PDF to overlay text
     packet = io.BytesIO()
     can = canvas.Canvas(packet)
+    can.setFont("Helvetica", 8)
 
     # Overlay text for each field. Replace with your actual coordinates
     # Example: can.drawString(x_coordinate, y_coordinate, data.get("fieldName", ""))
-    can.drawString(100, 700, data.get("name", ""))  # Replace 100, 700 with actual coordinates
-    can.drawString(100, 680, data.get("dateOfBirth", ""))
-    can.drawString(100, 660, data.get("address", ""))
+    can.drawString(100, 619, data.get("patientFirstName", ""))  # Replace 100, 700 with actual coordinates
+    can.drawString(200, 619, data.get("patientLastName", ""))
+    can.drawString(100, 608, data.get("gender", ""))
+    dob = data.get("dob", "")
+    formatted_dob = dob[:10]  # Extracts the first 10 characters
+    can.drawString(100, 600, formatted_dob)
+    print(data.get("dob", ""))
+    can.drawString(100, 500, data.get("address", ""))
+    can.drawString(100, 400, data.get("dob", ""))
+    
     # Add more fields as per your form
 
     can.save()
@@ -371,8 +380,12 @@ def print_pdf():
     writer.write(pdf_output)
     pdf_output.seek(0)
 
-    return send_file(pdf_output, attachment_filename="filled_pdf.pdf", as_attachment=True)
-
+    return send_file(
+        pdf_output, 
+        mimetype='application/pdf', 
+        as_attachment=True, 
+        download_name='filled_pdf.pdf'
+    )
 
 
 
