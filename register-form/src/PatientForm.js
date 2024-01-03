@@ -280,6 +280,22 @@ const PatientForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  function handlePrint() {
+    fetch('http://localhost:5000/print_pdf', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        window.open(url, '_blank');
+    })
+    .catch(error => console.error('Error:', error));
+}
+
 
  /*  const fontStyle = {
     fontFamily: 'Helvetica, sans-serif'  // set the font to Helvetica with a generic sans-serif fallback
@@ -294,6 +310,9 @@ const PatientForm = () => {
       <Typography variant="h4" align="center" gutterBottom>
         Registration Packet
       </Typography>
+      <Button variant="contained" color="primary" onClick={handlePrint}>
+                Print
+      </Button>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>

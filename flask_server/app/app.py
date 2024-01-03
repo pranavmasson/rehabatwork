@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify
 import pyodbc
 from flask_cors import CORS
+from PyPDF2 import PdfReader, PdfWriter
+from reportlab.pdfgen import canvas
+import io
 
 app = Flask(__name__)
 CORS(app)
@@ -336,6 +339,39 @@ def get_employer_details(employer_name):
     except Exception as e:
         print(e)
         abort(500)
+
+@app.route('/print_pdf', methods=['POST'])
+def print_pdf():
+    data = request.json
+    
+    # Load your single-page scanned PDF
+    reader = PdfReader("MASTER REGISTRATION REFERRAL.pdf")
+    writer = PdfWriter()
+
+    # Create a new PDF to overlay text
+    packet = io.BytesIO()
+    can = canvas.Canvas(packet)
+
+    # Overlay text for each field. Replace with your actual coordinates
+    # Example: can.drawString(x_coordinate, y_coordinate, data.get("fieldName", ""))
+    can.drawString(100, 700, data.get("name", ""))  # Replace 100, 700 with actual coordinates
+    can.drawString(100, 680, data.get("dateOfBirth", ""))
+    can.drawString(100, 660, data.get("address", ""))
+    # Add more fields as per your form
+
+    can.save()
+
+    packet.seek(0)
+    new_pdf = PdfReader(packet)
+    page = reader.pages[0]  # Assuming a single-page PDF
+    page.merge_page(new_pdf.pages[0])
+    writer.add_page(page)
+
+    pdf_output = io.BytesIO()
+    writer.write(pdf_output)
+    pdf_output.seek(0)
+
+    return send_file(pdf_output, attachment_filename="filled_pdf.pdf", as_attachment=True)
 
 
 
