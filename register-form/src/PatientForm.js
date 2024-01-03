@@ -288,13 +288,22 @@ const PatientForm = () => {
         },
         body: JSON.stringify(formData),
     })
-    .then(response => response.blob())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Server responded with status: ${response.status}`);
+        }
+        return response.blob();
+    })
     .then(blob => {
         const url = window.URL.createObjectURL(blob);
         window.open(url, '_blank');
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error fetching from Flask server:', error);
+        // You can also implement additional UI feedback for the error here
+    });
 }
+
 
 
  /*  const fontStyle = {
