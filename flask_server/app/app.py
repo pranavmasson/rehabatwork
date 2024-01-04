@@ -222,6 +222,7 @@ def get_practitioner_details(practitioner_name):
     # Replace the SQL query with one appropriate for your database schema
     cursor.execute('SELECT Full_Name, Practice, Street_1, City, State, Zip_Code, Office, Fax, Email FROM practitioners WHERE Full_Name = ?', practitioner_name)
     data = cursor.fetchone()
+    print(data[4])
     if data:
         details = {
             'name': data[0],
@@ -360,11 +361,136 @@ def print_pdf():
     can.drawString(200, 619, data.get("patientLastName", ""))
     can.drawString(100, 608, data.get("gender", ""))
     dob = data.get("dob", "")
-    formatted_dob = dob[:10]  # Extracts the first 10 characters
-    can.drawString(100, 600, formatted_dob)
-    print(data.get("dob", ""))
-    can.drawString(100, 500, data.get("address", ""))
-    can.drawString(100, 400, data.get("dob", ""))
+    if dob:
+        formatted_dob = dob[:10]  # Extracts the first 10 characters
+        can.drawString(200, 608, formatted_dob)
+    can.drawString(100, 597, data.get("patientPhoneNumber", ""))
+    can.drawString(375, 597, data.get("patientEmail", ""))
+    doi = data.get("doi", "")
+    if doi:
+        formatted_doi = doi[:10]  # Extracts the first 10 characters
+        can.drawString(375, 607, formatted_doi)
+    ssn = data.get("patientSSN", "")
+    formatted_ssn = ssn[5:]  # Extracts the last 4 characters
+    can.drawString(400, 619, formatted_ssn)
+    can.drawString(100, 583, data.get("patientAddress", ""))
+    can.drawString(375, 583, data.get("patientCity", ""))
+    can.drawString(450, 583, data.get("patientState", ""))
+    can.drawString(500, 583, data.get("patientZipCode", ""))
+
+    can.drawString(100, 560, data.get("referralType", ""))
+    can.drawString(395, 560, data.get("referredBy", ""))
+    can.drawString(375, 549, data.get("diagnosis", ""))
+    can.drawString(100, 548, data.get("icd10", ""))
+    can.drawString(100, 537, data.get("therapistInitials", ""))
+    can.drawString(100, 526, data.get("medicalRecordsSend", ""))
+    can.drawString(100, 515, data.get("jobDescriptionSend", ""))
+    otherData = data.get("otherDataSend", "")
+    if otherData:
+        can.drawString(214, 514, "X")
+        can.drawString(275, 514, otherData)
+    can.drawString(210, 503, data.get("returnToWork", ""))
+    can.drawString(315, 503, data.get("vocationalPlacement", ""))
+    can.drawString(450, 503, data.get("whwcOptional", ""))
+    can.drawString(125, 491, data.get("otherReferralGoals", ""))
+
+    can.drawString(100, 455, data.get("practitionerName", ""))
+    can.drawString(375, 455, data.get("practitionerPractice", ""))
+    can.drawString(100, 442, data.get("practitionerAddress", ""))
+    can.drawString(375, 442, data.get("practitionerCity", ""))
+    can.drawString(450, 442, data.get("practitionerState", ""))
+    can.drawString(500, 442, str(data.get("practitionerZipCode", "")))
+    can.drawString(100, 430, data.get("practitionerPhone", ""))
+    can.drawString(375, 430, data.get("practitionerFax", ""))
+    can.drawString(100, 418, data.get("practitionerEmail", ""))
+
+    can.drawString(100, 404, data.get("caseManagerName", ""))
+    can.drawString(375, 404, data.get("caseManagerPractice", ""))
+    can.drawString(100, 391, data.get("caseManagerAddress", ""))
+    can.drawString(375, 391, data.get("caseManagerCity", ""))
+    can.drawString(450, 391, data.get("caseManagerState", ""))
+    can.drawString(500, 391, data.get("caseManagerZipCode", ""))
+    can.drawString(100, 379, data.get("caseManagerPhone", ""))
+    can.drawString(375, 379, data.get("caseManagerFax", ""))
+    can.drawString(100, 367, data.get("caseManagerEmail", ""))
+
+    can.drawString(100, 353, data.get("atfcName", ""))
+    can.drawString(375, 353, data.get("atfcFirm", ""))
+    can.drawString(100, 340, data.get("atfcAddress", ""))
+    can.drawString(375, 340, data.get("atfcCity", ""))
+    can.drawString(450, 340, data.get("atfcState", ""))
+    can.drawString(500, 340, str(data.get("atfcZipCode", "")))
+    can.drawString(100, 328, data.get("atfcPhone", ""))
+    can.drawString(375, 328, data.get("atfcFax", ""))
+    can.drawString(100, 316, data.get("atfcEmail", ""))
+    can.drawString(375, 316, data.get("atfcParalegal", ""))
+
+    can.drawString(100, 291, data.get("additionalPartyType", ""))
+    can.drawString(200, 291, data.get("additionalPartyName", ""))
+    can.drawString(375, 291, data.get("additionalPartyCompany", ""))
+    can.drawString(100, 280, data.get("additionalPartyAddress", ""))
+    can.drawString(375, 280, data.get("additionalPartyCity", ""))
+    can.drawString(450, 280, data.get("additionalPartyState", ""))
+    can.drawString(500, 280, str(data.get("additionalPartyZipCode", "")))
+    can.drawString(100, 268, data.get("additionalPartyPhone", ""))
+    can.drawString(375, 268, data.get("additionalPartyFax", ""))
+    can.drawString(100, 256, data.get("additionalPartyEmail", ""))
+
+    can.drawString(100, 230, data.get("billedPartyName", ""))
+    can.drawString(375, 230, data.get("billedPartyCompany", ""))
+    can.drawString(100, 218, data.get("billedPartyAddress", ""))
+    can.drawString(375, 218, data.get("billedPartyCity", ""))
+    can.drawString(450, 218, data.get("billedPartyState", ""))
+    can.drawString(500, 218, str(data.get("billedPartyZipCode", "")))
+    can.drawString(100, 205, data.get("billedPartyPhone", ""))
+    can.drawString(375, 205, data.get("billedPartyFax", ""))
+    can.drawString(100, 193, data.get("billedPartyEmail", ""))
+    can.drawString(375, 193, data.get("billedPartyJurisdiction", ""))
+
+    can.drawString(100, 156, data.get("insuranceIdentifier", ""))
+    can.drawString(375, 156, data.get("caseNumber", ""))
+    can.drawString(100, 145, data.get("authorizedVisits", ""))
+    can.drawString(210, 145, data.get("authorizedExp", ""))
+
+    can.drawString(210, 130, data.get("policyHolderName", ""))
+    can.drawString(500, 130, data.get("policyHolderRelationship", ""))
+    phdob = data.get("phdob", "")
+    if dob:
+        formatted_phdob = phdob[:10]  # Extracts the first 10 characters
+        can.drawString(210, 110, formatted_phdob)
+    can.drawString(370, 118, data.get("policyHolderAddress", ""))
+    can.drawString(370, 106, data.get("policyHolderCity", ""))
+    can.drawString(440, 106, data.get("policyHolderState", ""))
+    can.drawString(470, 106, data.get("policyHolderZipCode", ""))
+    benefits = data.get("benefitsExplained", "")
+    if benefits:
+        if benefits == 'Yes':
+            can.drawString(375, 93, "X")
+        elif benefits == 'No':
+            can.drawString(455, 93, "X")
+        elif benefits == 'NA':
+            can.setFont("Helvetica", 30)
+            can.drawString(507, 88, "O")
+            can.setFont("Helvetica", 7)
+    
+    can.drawString(100, 68, data.get("employerName", ""))
+    can.drawString(375, 68, data.get("patientPosition", ""))
+    can.drawString(100, 55, data.get("patientEmployerContact", ""))
+    can.drawString(375, 55, data.get("patientEmployerPhone", ""))
+
+    dateOfReferral = data.get("dateOfReferral", "")
+    if dateOfReferral:
+        formatted_dateOfReferral = dateOfReferral[:10]  # Extracts the first 10 characters
+        can.drawString(100, 26, formatted_dateOfReferral)
+    dateOfRevision = data.get("dateOfRevision", "")
+    if dateOfRevision:
+        formatted_dateOfRevision = dateOfRevision[:10]  # Extracts the first 10 characters
+        can.drawString(375, 26, formatted_dateOfRevision)
+    can.drawString(375, 40, data.get("appointmentDate", ""))
+    can.drawString(500, 40, data.get("appointmentTime", ""))
+    can.drawString(100, 40, data.get("service", ""))
+
+
     
     # Add more fields as per your form
 

@@ -125,6 +125,7 @@ const PatientForm = () => {
     policyHolderCity: '',
     policyHolderState: '',
     benefitsExplained: '',
+    employerName: '',
     patientPosition: '',
     patientEmployerContact: '',
     patientEmployerPhone: '',
@@ -565,8 +566,8 @@ const PatientForm = () => {
                     onChange={handleInputChange}
                     margin="normal"
                   >
-                    <MenuItem value="male">Yes</MenuItem>
-                    <MenuItem value="female">No</MenuItem>
+                    <MenuItem value="Yes">Yes</MenuItem>
+                    <MenuItem value="No">No</MenuItem>
                   </TextField>
                 </Grid>
                 <Grid item xs={3}>
@@ -579,8 +580,8 @@ const PatientForm = () => {
                     onChange={handleInputChange}
                     margin="normal"
                   >
-                    <MenuItem value="male">Yes</MenuItem>
-                    <MenuItem value="female">No</MenuItem>
+                    <MenuItem value="Yes">Yes</MenuItem>
+                    <MenuItem value="No">No</MenuItem>
                   </TextField>
                 </Grid>
                 <Grid item xs={3}>
@@ -638,7 +639,7 @@ const PatientForm = () => {
                     label="WH/WC Optional"
                     name="whwcOptional"
                     select
-                    value={formData.vocationalPlacement}
+                    value={formData.whwcOptional}
                     onChange={handleInputChange}
                     margin="normal"
                   >
@@ -714,8 +715,8 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="State"
-                    name="practitionerCity"
-                    value={formData.practitionerCity}
+                    name="practitionerState"
+                    value={formData.practitionerState}
                     onChange={handleInputChange}
                     margin="normal"
                   />
@@ -754,7 +755,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Preferred Contact"
-                    name="Preferred Contact"
+                    name="practitionerContactStyle"
                     select
                     value={formData.practitionerContactStyle}
                     onChange={handleInputChange}
@@ -768,7 +769,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Preferred Report"
-                    name="Preferred Report"
+                    name="practitionerReportStyle"
                     select
                     value={formData.practitionerReportStyle}
                     onChange={handleInputChange}
@@ -836,8 +837,8 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="State"
-                    name="caseManagerCity"
-                    value={formData.caseManagerCity}
+                    name="caseManagerState"
+                    value={formData.caseManagerState}
                     onChange={handleInputChange}
                     margin="normal"
                   />
@@ -876,9 +877,9 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Preferred Contact"
-                    name="Preferred Contact"
+                    name="caseManagerContactStyle"
                     select
-                    value={formData.CaseManagerContactStyle}
+                    value={formData.caseManagerContactStyle}
                     onChange={handleInputChange}
                     margin="normal"
                   >
@@ -890,9 +891,9 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Preferred Report"
-                    name="Preferred Report"
+                    name="caseManagerReportStyle"
                     select
-                    value={formData.CaseManagerReportStyle}
+                    value={formData.caseManagerReportStyle}
                     onChange={handleInputChange}
                     margin="normal"
                   >
@@ -1008,7 +1009,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Preferred Contact"
-                    name="Preferred Contact"
+                    name="atfcContactStyle"
                     select
                     value={formData.atfcContactStyle}
                     onChange={handleInputChange}
@@ -1022,7 +1023,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Preferred Report"
-                    name="Preferred Report"
+                    name="atfcReportStyle"
                     select
                     value={formData.atfcReportStyle}
                     onChange={handleInputChange}
@@ -1143,7 +1144,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Preferred Contact"
-                    name="Preferred Contact"
+                    name="additionalPartyContactStyle"
                     select
                     value={formData.additionalPartyContactStyle}
                     onChange={handleInputChange}
@@ -1157,7 +1158,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Preferred Report"
-                    name="Preferred Report"
+                    name="additionalPartyReportStyle"
                     select
                     value={formData.additionalPartyReportStyle}
                     onChange={handleInputChange}
@@ -1185,7 +1186,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Jurisdiction"
-                    name="jurisdiction"
+                    name="billedPartyJurisdiction"
                     select
                     value={formData.billedPartyJurisdiction}
                     onChange={handleInputChange}
@@ -1202,7 +1203,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Company"
-                    name="BilledPartyCompany"
+                    name="billedPartyCompany"
                     value={formData.billedPartyCompany}
                     onChange={handleInputChange}
                     margin="normal"
@@ -1212,7 +1213,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Address"
-                    name="BilledPartyAddress"
+                    name="billedPartyAddress"
                     value={formData.billedPartyAddress}
                     onChange={handleInputChange}
                     margin="normal"
@@ -1222,7 +1223,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Zip Code"
-                    name="BilledPartyZipCode"
+                    name="billedZipCode"
                     value={formData.billedZipCode}
                     onChange={handleInputChange}
                     margin="normal"
@@ -1232,7 +1233,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="City"
-                    name="BilledPartyCity"
+                    name="billedPartyCity"
                     value={formData.billedPartyCity}
                     onChange={handleInputChange}
                     margin="normal"
@@ -1242,7 +1243,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="State"
-                    name="BilledPartyState"
+                    name="billedPartyState"
                     value={formData.billedPartyState}
                     onChange={handleInputChange}
                     margin="normal"
@@ -1252,7 +1253,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Phone"
-                    name="BilledPartyPhone"
+                    name="billedPartyPhone"
                     value={formData.billedPartyPhone}
                     onChange={handleInputChange}
                     margin="normal"
@@ -1262,7 +1263,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Email"
-                    name="BilledPartyEmail"
+                    name="billedPartyEmail"
                     value={formData.billedPartyEmail}
                     onChange={handleInputChange}
                     margin="normal"
@@ -1272,7 +1273,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Fax"
-                    name="BilledPartyFax"
+                    name="billedPartyFax"
                     value={formData.billedPartyFax}
                     onChange={handleInputChange}
                     margin="normal"
@@ -1282,7 +1283,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Preferred Contact"
-                    name="Preferred Contact"
+                    name="billedPartyContactStyle"
                     select
                     value={formData.billedPartyContactStyle}
                     onChange={handleInputChange}
@@ -1296,7 +1297,7 @@ const PatientForm = () => {
                   <TextField
                     fullWidth
                     label="Preferred Report"
-                    name="Preferred Report"
+                    name="billedPartyReportStyle"
                     select
                     value={formData.billedPartyReportStyle}
                     onChange={handleInputChange}
@@ -1429,7 +1430,7 @@ const PatientForm = () => {
                       name="phdob"
                       value={formData.phdob}
                       onChange={(date) =>
-                        setFormData({ ...formData, dob: date })
+                        setFormData({ ...formData, phdob: date })
                       }
                       margin="normal"
                     />
