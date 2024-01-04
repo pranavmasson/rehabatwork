@@ -19,6 +19,8 @@ import logo from './assets/logo2.png';
 import SubmissionConfirmation from './SubmissionConfirmation'; // Adjust the path as necessary
 import DropdownMenu from './PractitionerName'; // Adjust the path as necessary
 import dayjs from 'dayjs';
+import { useParams } from 'react-router-dom';
+
 
 
 
@@ -27,6 +29,7 @@ import dayjs from 'dayjs';
 
 
 const PatientForm = () => {
+  const { patientSSN } = useParams();
   const [formData, setFormData] = useState({
     patientFirstName: '',
     patientLastName: '',
@@ -147,9 +150,29 @@ const PatientForm = () => {
   const [billedPartyName, setBilledPartyName] = useState('');
   const [employerName, setEmployerName] = useState('');
   
+  // useEffect(() => {
+  //   setFormData({ ...formData, dateOfRevision: dayjs() });
+  // }, []);
+
   useEffect(() => {
-    setFormData({ ...formData, dateOfRevision: dayjs() });
-  }, []);
+    const fetchPatientData = async () => {
+        if (patientSSN) {
+            try {
+                const response = await fetch(`http://localhost:5000/patient/${patientSSN}`);
+                const data = await response.json();
+                setFormData({ ...data, dateOfRevision: dayjs(data.dateOfRevision) });
+            } catch (error) {
+                console.error('Error fetching patient data:', error);
+            }
+        } else {
+            // Only set the dateOfRevision when adding a new patient (not editing)
+            setFormData({ ...formData, dateOfRevision: dayjs() });
+        }
+    };
+
+    fetchPatientData();
+}, [patientSSN]);
+
 
   // const handlePractitionerChange = (event) => {
   //   setFormData({ ...formData, practitionerName: event.target.value });
@@ -250,31 +273,63 @@ const PatientForm = () => {
 
 
 
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   setIsSubmitted(true);
+  
+  //   try {
+  //     const response = await fetch('http://localhost:5000/submit_patient_form', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(formData),
+  //     });
+  
+  //     if (response.ok) {
+  //       console.log('Form submitted successfully');
+  //       // Handle successful submission, like clearing the form or showing a success message
+  //     } else {
+  //       console.error('Form submission failed:', response.statusText);
+  //       // Handle response errors here
+  //     }
+  //   } catch (error) {
+  //     console.error('Network error:', error);
+  //     // Handle network errors here
+  //   }
+  // };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsSubmitted(true);
-  
+
+    // Determine the URL and HTTP method based on whether you are editing or creating a new patient
+    const url = patientSSN ? `http://localhost:5000/update_patient/${patientSSN}` : 'http://localhost:5000/submit_patient_form';
+    const method = patientSSN ? 'PUT' : 'POST'; // Use PUT for update, POST for create
+
     try {
-      const response = await fetch('http://localhost:5000/submit_patient_form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-  
-      if (response.ok) {
-        console.log('Form submitted successfully');
-        // Handle successful submission, like clearing the form or showing a success message
-      } else {
-        console.error('Form submission failed:', response.statusText);
-        // Handle response errors here
-      }
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            console.log('Form submitted successfully');
+            // Handle successful submission
+            // Redirect or display a success message
+        } else {
+            console.error('Form submission failed:', response.statusText);
+            // Handle response errors here
+        }
     } catch (error) {
-      console.error('Network error:', error);
-      // Handle network errors here
+        console.error('Network error:', error);
+        // Handle network errors here
     }
-  };
+};
+
 
   function handleInputChange(event) {
     const { name, value } = event.target;

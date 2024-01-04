@@ -5,6 +5,8 @@ from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
 import io
 import re
+from datetime import datetime
+from email.utils import parsedate_to_datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -196,14 +198,14 @@ def search_patients():
     if mode == 'name':
         first_name, last_name = term.split(' ')
         query = """
-            SELECT patientFirstName, patientLastName, dob, gender, doi
+            SELECT patientFirstName, patientLastName, dob, gender, doi, patientSSN
             FROM PatientForms
             WHERE patientFirstName LIKE ? AND patientLastName LIKE ?
         """
         cursor.execute(query, (first_name + '%', last_name + '%'))
     elif mode == 'dob':
         query = """
-            SELECT patientFirstName, patientLastName, dob, gender, doi
+            SELECT patientFirstName, patientLastName, dob, gender, doi, patientSSN
             FROM PatientForms
             WHERE dob = ?
         """
@@ -512,6 +514,174 @@ def print_pdf():
         as_attachment=True, 
         download_name='filled_pdf.pdf'
     )
+
+
+@app.route('/patient/<ssn>', methods=['GET'])
+def get_patient_details(ssn):
+    print(ssn + "here")
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT * FROM PatientForms WHERE patientSSN = ?
+    ''', ssn)
+    patient_data = cursor.fetchone()
+    if patient_data:
+        result = {column_name: patient_data[i] for i, column_name in enumerate([
+            'PatientFormId', 'patientFirstName', 'patientLastName', 'patientSSN', 
+            'gender', 'dob', 'doi', 'field2', 'patientPhoneNumber', 'patientEmail', 
+            'patientAddress', 'patientZipCode', 'patientState', 'patientCity', 
+            'referralType', 'diagnosis', 'referredBy', 'icd10', 'therapistInitials', 
+            'medicalRecordsSend', 'jobDescriptionSend', 'otherDataSend', 'returnToWork', 
+            'vocationalPlacement', 'whwcOptional', 'otherReferralGoals', 
+            'practitionerName', 'practitionerPractice', 'practitionerAddress', 
+            'practitionerZipCode', 'practitionerCity', 'practitionerState', 
+            'practitionerPhone', 'practitionerEmail', 'practitionerFax', 
+            'practitionerContactStyle', 'practitionerReportStyle', 'caseManagerName', 
+            'caseManagerPractice', 'caseManagerAddress', 'caseManagerZipCode', 
+            'caseManagerCity', 'caseManagerState', 'caseManagerPhone', 
+            'caseManagerEmail', 'caseManagerFax', 'caseManagerContactStyle', 
+            'caseManagerReportStyle', 'atfcName', 'atfcFirm', 'atfcParalegal', 
+            'atfcAddress', 'atfcZipCode', 'atfcCity', 'atfcState', 'atfcPhone', 
+            'atfcEmail', 'atfcFax', 'atfcContactStyle', 'atfcReportStyle', 
+            'additionalPartyType', 'additionalPartyName', 'additionalPartyCompany', 
+            'additionalPartyAddress', 'additionalPartyZipCode', 'additionalPartyCity', 
+            'additionalPartyState', 'additionalPartyPhone', 'additionalPartyEmail', 
+            'additionalPartyFax', 'additionalPartyContactStyle', 'additionalPartyReportStyle', 
+            'billedPartyName', 'billedPartyJurisdiction', 'billedPartyCompany', 
+            'billedPartyAddress', 'billedPartyZipCode', 'billedPartyCity', 
+            'billedPartyState', 'billedPartyPhone', 'billedPartyEmail', 'billedPartyFax', 
+            'billedPartyContactStyle', 'billedPartyReportStyle', 'insuranceIdentifier', 
+            'secondaryInsuranceIdentifier', 'authorizedVisits', 'authorizedExp', 
+            'caseNumber', 'reasonForVisit', 'policyHolderName', 'policyHolderRelationship', 
+            'phdob', 'policyHolderAddress', 'policyHolderZipCode', 'policyHolderCity', 
+            'policyHolderState', 'benefitsExplained', 'patientPosition', 
+            'patientEmployerContact', 'patientEmployerPhone', 'emergencyContactName', 
+            'emergencyContactPhone', 'emergencyContactRelationship', 'dateOfReferral', 
+            'dateOfRevision', 'appointmentDate', 'appointmentTime', 'referralNotes', 
+            'employerName', 'deadReferralReason'
+        ])}
+    else:
+        result = {'error': 'Patient not found'}
+    cursor.close()
+    conn.close()
+    return jsonify(result)
+
+def format_iso8601_to_sql(date_str):
+    if date_str:
+        return datetime.fromisoformat(date_str.replace("Z", "+00:00")).strftime('%Y-%m-%d %H:%M:%S')
+    return None
+
+def format_date_to_sql(date_str):
+    if date_str:
+        try:
+            # First, try parsing as ISO 8601 format
+            return datetime.fromisoformat(date_str.replace("Z", "+00:00")).strftime('%Y-%m-%d %H:%M:%S')
+        except ValueError:
+            # If that fails, try parsing as HTTP-style date
+            try:
+                dt = parsedate_to_datetime(date_str)
+                return dt.strftime('%Y-%m-%d %H:%M:%S')
+            except Exception as e:
+                print(f"Error parsing date: {e}")
+                return None
+    return None
+
+@app.route('/update_patient/<ssn>', methods=['PUT'])
+def update_patient(ssn):
+    try:
+        patient_data = request.json
+        patient_data['dateOfRevision'] = format_date_to_sql(patient_data['dateOfRevision'])
+        patient_data['authorizedExp'] = format_date_to_sql(patient_data['authorizedExp'])
+        patient_data['dateOfReferral'] = format_date_to_sql(patient_data['dateOfReferral'])
+        patient_data['dob'] = format_date_to_sql(patient_data['dob'])  # Date of Birth
+        patient_data['doi'] = format_date_to_sql(patient_data['doi'])  # Date of Injury
+        patient_data['phdob'] = format_date_to_sql(patient_data['phdob'])  # Policy Holder Date of Birth
+        print(patient_data)
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        update_query = '''
+        UPDATE PatientForms SET 
+        patientFirstName = ?, patientLastName = ?, gender = ?, dob = ?, doi = ?, 
+        field2 = ?, patientPhoneNumber = ?, patientEmail = ?, patientAddress = ?, 
+        patientZipCode = ?, patientState = ?, patientCity = ?, referralType = ?, 
+        diagnosis = ?, referredBy = ?, icd10 = ?, therapistInitials = ?, 
+        medicalRecordsSend = ?, jobDescriptionSend = ?, otherDataSend = ?, 
+        returnToWork = ?, vocationalPlacement = ?, whwcOptional = ?, 
+        otherReferralGoals = ?, practitionerName = ?, practitionerPractice = ?, 
+        practitionerAddress = ?, practitionerZipCode = ?, practitionerCity = ?, 
+        practitionerState = ?, practitionerPhone = ?, practitionerEmail = ?, 
+        practitionerFax = ?, practitionerContactStyle = ?, practitionerReportStyle = ?, 
+        caseManagerName = ?, caseManagerPractice = ?, caseManagerAddress = ?, 
+        caseManagerZipCode = ?, caseManagerCity = ?, caseManagerState = ?, 
+        caseManagerPhone = ?, caseManagerEmail = ?, caseManagerFax = ?, 
+        caseManagerContactStyle = ?, caseManagerReportStyle = ?, atfcName = ?, 
+        atfcFirm = ?, atfcParalegal = ?, atfcAddress = ?, atfcZipCode = ?, 
+        atfcCity = ?, atfcState = ?, atfcPhone = ?, atfcEmail = ?, atfcFax = ?, 
+        atfcContactStyle = ?, atfcReportStyle = ?, additionalPartyType = ?, 
+        additionalPartyName = ?, additionalPartyCompany = ?, additionalPartyAddress = ?, 
+        additionalPartyZipCode = ?, additionalPartyCity = ?, additionalPartyState = ?, 
+        additionalPartyPhone = ?, additionalPartyEmail = ?, additionalPartyFax = ?, 
+        additionalPartyContactStyle = ?, additionalPartyReportStyle = ?, billedPartyName = ?, 
+        billedPartyJurisdiction = ?, billedPartyCompany = ?, billedPartyAddress = ?, 
+        billedPartyZipCode = ?, billedPartyCity = ?, billedPartyState = ?, 
+        billedPartyPhone = ?, billedPartyEmail = ?, billedPartyFax = ?, 
+        billedPartyContactStyle = ?, billedPartyReportStyle = ?, insuranceIdentifier = ?, 
+        secondaryInsuranceIdentifier = ?, authorizedVisits = ?, authorizedExp = ?, 
+        caseNumber = ?, reasonForVisit = ?, policyHolderName = ?, policyHolderRelationship = ?, 
+        phdob = ?, policyHolderAddress = ?, policyHolderZipCode = ?, policyHolderCity = ?, 
+        policyHolderState = ?, benefitsExplained = ?, patientPosition = ?, 
+        patientEmployerContact = ?, patientEmployerPhone = ?, emergencyContactName = ?, 
+        emergencyContactPhone = ?, emergencyContactRelationship = ?, dateOfReferral = ?, 
+        dateOfRevision = ?, appointmentDate = ?, appointmentTime = ?, referralNotes = ?, 
+        employerName = ?, deadReferralReason = ?
+        WHERE patientSSN = ?
+        '''
+        cursor.execute(update_query, (
+            patient_data['patientFirstName'], patient_data['patientLastName'], patient_data['gender'], 
+            patient_data['dob'], patient_data['doi'], patient_data['field2'], 
+            patient_data['patientPhoneNumber'], patient_data['patientEmail'], patient_data['patientAddress'], 
+            patient_data['patientZipCode'], patient_data['patientState'], patient_data['patientCity'], 
+            patient_data['referralType'], patient_data['diagnosis'], patient_data['referredBy'], 
+            patient_data['icd10'], patient_data['therapistInitials'], patient_data['medicalRecordsSend'], 
+            patient_data['jobDescriptionSend'], patient_data['otherDataSend'], patient_data['returnToWork'], 
+            patient_data['vocationalPlacement'], patient_data['whwcOptional'], patient_data['otherReferralGoals'], 
+            patient_data['practitionerName'], patient_data['practitionerPractice'], patient_data['practitionerAddress'], 
+            patient_data['practitionerZipCode'], patient_data['practitionerCity'], patient_data['practitionerState'], 
+            patient_data['practitionerPhone'], patient_data['practitionerEmail'], patient_data['practitionerFax'], 
+            patient_data['practitionerContactStyle'], patient_data['practitionerReportStyle'], patient_data['caseManagerName'], 
+            patient_data['caseManagerPractice'], patient_data['caseManagerAddress'], patient_data['caseManagerZipCode'], 
+            patient_data['caseManagerCity'], patient_data['caseManagerState'], patient_data['caseManagerPhone'], 
+            patient_data['caseManagerEmail'], patient_data['caseManagerFax'], patient_data['caseManagerContactStyle'], 
+            patient_data['caseManagerReportStyle'], patient_data['atfcName'], patient_data['atfcFirm'], 
+            patient_data['atfcParalegal'], patient_data['atfcAddress'], patient_data['atfcZipCode'], patient_data['atfcCity'], 
+            patient_data['atfcState'], patient_data['atfcPhone'], patient_data['atfcEmail'], patient_data['atfcFax'], 
+            patient_data['atfcContactStyle'], patient_data['atfcReportStyle'], patient_data['additionalPartyType'], 
+            patient_data['additionalPartyName'], patient_data['additionalPartyCompany'], patient_data['additionalPartyAddress'], 
+            patient_data['additionalPartyZipCode'], patient_data['additionalPartyCity'], patient_data['additionalPartyState'], 
+            patient_data['additionalPartyPhone'], patient_data['additionalPartyEmail'], patient_data['additionalPartyFax'], 
+            patient_data['additionalPartyContactStyle'], patient_data['additionalPartyReportStyle'], patient_data['billedPartyName'], 
+            patient_data['billedPartyJurisdiction'], patient_data['billedPartyCompany'], patient_data['billedPartyAddress'], 
+            patient_data['billedPartyZipCode'], patient_data['billedPartyCity'], patient_data['billedPartyState'], 
+            patient_data['billedPartyPhone'], patient_data['billedPartyEmail'], patient_data['billedPartyFax'], 
+            patient_data['billedPartyContactStyle'], patient_data['billedPartyReportStyle'], patient_data['insuranceIdentifier'], 
+            patient_data['secondaryInsuranceIdentifier'], patient_data['authorizedVisits'], patient_data['authorizedExp'], 
+            patient_data['caseNumber'], patient_data['reasonForVisit'], patient_data['policyHolderName'], 
+            patient_data['policyHolderRelationship'], patient_data['phdob'], patient_data['policyHolderAddress'], 
+            patient_data['policyHolderZipCode'], patient_data['policyHolderCity'], patient_data['policyHolderState'], 
+            patient_data['benefitsExplained'], patient_data['patientPosition'], patient_data['patientEmployerContact'], 
+            patient_data['patientEmployerPhone'], patient_data['emergencyContactName'], patient_data['emergencyContactPhone'], 
+            patient_data['emergencyContactRelationship'], patient_data['dateOfReferral'], patient_data['dateOfRevision'], 
+            patient_data['appointmentDate'], patient_data['appointmentTime'], patient_data['referralNotes'], 
+            patient_data['employerName'], patient_data['deadReferralReason'],
+            ssn))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({'success': True})
+    except Exception as e:
+        print(f"Error updating patient: {e}")
+        return jsonify({"error": str(e)}), 500
+
 
 
 

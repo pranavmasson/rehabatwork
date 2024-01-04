@@ -12,6 +12,7 @@ function App() {
       <Routes> {/* Routes is the new switch component in v6 */}
         <Route path="/" element={<HomePage />} /> {/* Define the route for HomePage */}
         <Route path="/patient-form" element={<PatientForm />} /> {/* Define the route for PatientForm */}
+        <Route path="/patient-form/:patientSSN" element={<PatientForm />} /> {/* Define the route for PatientForm */}
         {/* Add additional Routes as needed */}
       </Routes>
     </Router>

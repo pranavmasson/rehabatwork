@@ -18,11 +18,22 @@ const HomePage = () => {
     try {
       const response = await fetch(url);
       const data = await response.json();
+      console.log(data);
       setPatients(data);
     } catch (error) {
       console.error('Error fetching patient data:', error);
     }
   };
+
+  const handleEditClick = (patientSSN) => {
+    console.log("Navigating to patient form with SSN:", patientSSN);
+    if (patientSSN) {
+        navigate(`/patient-form/${patientSSN}`);
+    } else {
+        console.error("Attempted to navigate with undefined SSN.");
+    }
+};
+
 
   const handleNewPatientClick = () => {
     navigate('/patient-form');
@@ -65,15 +76,23 @@ const HomePage = () => {
 
       {/* Display the fetched patient data */}
       {patients.map((patient, index) => (
-        <Card key={index} sx={{ mb: 2 }}>
-          <CardContent>
-            <Typography variant="h6">{patient.patientFirstName} {patient.patientLastName}</Typography>
-            <Typography variant="body1">DOB: {patient.dob}</Typography>
-            <Typography variant="body1">Gender: {patient.gender}</Typography>
-            <Typography variant="body1">DOI: {patient.doi}</Typography>
-          </CardContent>
-        </Card>
-      ))}
+            <Card key={index} sx={{ mb: 2 }}>
+                <CardContent>
+                    <Typography variant="h6">{patient.patientFirstName} {patient.patientLastName}</Typography>
+                    <Typography variant="body1">DOB: {patient.dob}</Typography>
+                    <Typography variant="body1">Gender: {patient.gender}</Typography>
+                    <Typography variant="body1">DOI: {patient.doi}</Typography>
+                    <Button 
+                        variant="outlined" 
+                        color="primary" 
+                        onClick={() => handleEditClick(patient.patientSSN)}
+                        sx={{ mt: 2 }}
+                    >
+                        Edit
+                    </Button>
+                </CardContent>
+            </Card>
+        ))}
     </Container>
   );
 };
