@@ -125,7 +125,6 @@ const PatientForm = () => {
     policyHolderCity: '',
     policyHolderState: '',
     benefitsExplained: '',
-    employerName: '',
     patientPosition: '',
     patientEmployerContact: '',
     patientEmployerPhone: '',
@@ -137,6 +136,8 @@ const PatientForm = () => {
     appointmentDate: null,
     appointmentTime: null,
     referralNotes: '',
+    employerName: '',
+    deadReferralReason: '',
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
